@@ -22,9 +22,11 @@ ACBUILD=${ACBUILD:-acbuild}
 
 $ACBUILD --debug begin
 
-$ACBUILD --debug set-name portefaix/base
+$ACBUILD --debug set-name github.com/portefaix/rkt-base
 $ACBUILD --debug annotation add authors "Nicolas Lamirault <nicolas.lamirault@gmail.com>"
 $ACBUILD --debug label add version $VERSION
+$ACBUILD --debug label add arch amd64
+$ACBUILD --debug label add os linux
 
 # based on alpine
 $ACBUILD --debug dep add quay.io/coreos/alpine-sh
@@ -34,6 +36,6 @@ $ACBUILD --debug run -- apk upgrade
 $ACBUILD --debug run -- apk add bash
 $ACBUILD --debug run -- rm -rf /var/cache/apk/*
 
-$ACBUILD --debug write --overwrite ./rkt-base-$VERSION.aci
+$ACBUILD --debug write --overwrite ./rkt-base-$VERSION-linux-amd64.aci
 
 $ACBUILD --debug end
