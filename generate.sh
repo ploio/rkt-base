@@ -29,7 +29,7 @@ rm library-alpine-${ALPINE_VERSION}.aci
 echo -e "Build ACI ${ACI}"
 pushd library-alpine-${ALPINE_VERSION}
 mv manifest manifest.old
-jq '.name = "pkg.aster.is/aci/alpine"' manifest.old > manifest
+jq '.name = "github.com/portefaix/alpine"' manifest.old > manifest
 rm manifest.old
 tar -cf ${ACI} *
 popd
