@@ -16,25 +16,23 @@
 
 set -e
 
-ACBUILD=${ACBUILD:-acbuild}
-
 ALPINE_VERSION=$1
 
 echo -e "Build Portefaix Rkt Base using Alpine ${ALPINE_VERSION}"
 
-$ACBUILD --debug begin ./${ALPINE_VERSION}/alpine-${ALPINE_VERSION}-linux-amd64.aci
+acbuild --debug begin ./${ALPINE_VERSION}/alpine-${ALPINE_VERSION}-linux-amd64.aci
 
-$ACBUILD --debug set-name github.com/portefaix/base
-$ACBUILD --debug annotation add authors "Nicolas Lamirault <nicolas.lamirault@gmail.com>"
-$ACBUILD --debug label add arch amd64
-$ACBUILD --debug label add os linux
-$ACBUILD --debug label add alpine_version ${ALPINE_VERSION}
+acbuild --debug set-name github.com/portefaix/base
+acbuild --debug annotation add authors "Nicolas Lamirault <nicolas.lamirault@gmail.com>"
+acbuild --debug label add arch amd64
+acbuild --debug label add os linux
+acbuild --debug label add alpine_version ${ALPINE_VERSION}
 
-$ACBUILD --debug run -- apk update
-$ACBUILD --debug run -- apk upgrade
-$ACBUILD --debug run -- apk add bash
-$ACBUILD --debug run -- rm -rf /var/cache/apk/*
+acbuild --debug run -- apk update
+acbuild --debug run -- apk upgrade
+acbuild --debug run -- apk add bash
+acbuild --debug run -- rm -rf /var/cache/apk/*
 
-$ACBUILD --debug write --overwrite ./${ALPINE_VERSION}/base-${ALPINE_VERSION}-linux-amd64.aci
+acbuild --debug write --overwrite ./${ALPINE_VERSION}/base-${ALPINE_VERSION}-linux-amd64.aci
 
-$ACBUILD --debug end
+acbuild --debug end
