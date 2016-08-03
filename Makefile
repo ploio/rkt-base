@@ -56,13 +56,17 @@ fetch:
 build:
 	@echo -e "$(OK_COLOR)[$(APP)] Build $(NAMESPACE)/$(IMAGE):$(VERSION)$(NO_COLOR)"
 	@sudo ./build.sh 3.4
+	@sudo ./build.sh 3.3
+	@sudo ./build.sh 3.2
+	@sudo ./build.sh 3.1
+	@sudo ./build.sh edge
 
 .PHONY: sign
 sign:
 	@echo -e "$(OK_COLOR)[$(APP)] Sign image $(NAMESPACE)/$(IMAGE):$(VERSION)$(NO_COLOR)"
 	gpg --armor --yes \
-	     --output /rkt-base-$(VERSION).asc \
-	     --detach-sig ./rkt-base-$(VERSION).aci
+	     --output /base-$(VERSION).asc \
+	     --detach-sig ./base-$(VERSION).aci
 
 .PHONY: run
 run:
