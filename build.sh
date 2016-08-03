@@ -16,9 +16,13 @@
 
 set -e
 
-VERSION=0.1.0
+VERSION=0.2.0
 
 ACBUILD=${ACBUILD:-acbuild}
+
+ALPINE_VERSION=$1
+
+echo -e "Build Portefaix Rkt Base using Alpine ${ALPINE_VERSION}"
 
 $ACBUILD --debug begin
 
@@ -27,9 +31,11 @@ $ACBUILD --debug annotation add authors "Nicolas Lamirault <nicolas.lamirault@gm
 $ACBUILD --debug label add version $VERSION
 $ACBUILD --debug label add arch amd64
 $ACBUILD --debug label add os linux
+$ACBUILD --debug label add alpine_version $ALPINE_VERSION
 
 # based on alpine
-$ACBUILD --debug dep add quay.io/coreos/alpine-sh
+# $ACBUILD --debug dep add quay.io/coreos/alpine-sh
+$ACBUILD --debug dep add github.com/portefaix/rkt-base/alpine:3.4
 
 $ACBUILD --debug run -- apk update
 $ACBUILD --debug run -- apk upgrade

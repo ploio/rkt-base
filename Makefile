@@ -34,10 +34,19 @@ help:
 	@echo -e "$(WARN_COLOR)- run version=xx     : Run a container"
 	@echo -e "$(WARN_COLOR)- debug version=xx   : Launch a shell"
 
+.PHONY: generate
+generate:
+	@echo -e "$(OK_COLOR)[$(APP)] Generate Alpine ACI $(NO_COLOR)"
+	@sudo ./generate.sh 3.4
+	@sudo ./generate.sh 3.3
+	@sudo ./generate.sh 3.2
+	@sudo ./generate.sh 3.1
+	@sudo ./generate.sh edge
+
 .PHONY: build
 build:
 	@echo -e "$(OK_COLOR)[$(APP)] Build $(NAMESPACE)/$(IMAGE):$(VERSION)$(NO_COLOR)"
-	@sudo ./build.sh
+	@sudo ./build.sh 3.4
 
 .PHONY: sign
 sign:
