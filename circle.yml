@@ -12,7 +12,7 @@ dependencies:
     - docker info
     - docker version
     - curl -L https://github.com/appc/acbuild/releases/download/v0.3.1/acbuild-v0.3.1.tar.gz | sudo tar -xz -C /usr/local/src
-    - cp /usr/local/src/acbuild-v0.3.1/acbuild /usr/local/bin
+    - export PATH=$PATH:/usr/local/src/acbuild-v0.3.1/
 
   override:
     - docker info
