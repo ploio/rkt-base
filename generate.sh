@@ -18,7 +18,8 @@ set -e
 
 ALPINE_VERSION=$1
 
-ACI=$(pwd)/alpine-${ALPINE_VERSION}-linux-amd64.aci
+ACI=$(pwd)/${ALPINE_VERSION}/alpine-${ALPINE_VERSION}-linux-amd64.aci
+mkdir -p ${ALPINE_VERSION}
 
 echo -e "Generate Rkt Alpine from Docker Alpine ${ALPINE_VERSION}"
 docker2aci docker://alpine:${ALPINE_VERSION}
