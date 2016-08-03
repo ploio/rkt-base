@@ -1,4 +1,6 @@
 machine:
+  environment:
+    PATH: ${PATH}:/usr/local/src/acbuild-v0.3.1/
   services:
     - docker
 
@@ -12,23 +14,22 @@ dependencies:
     - docker info
     - docker version
     - curl -L https://github.com/appc/acbuild/releases/download/v0.3.1/acbuild-v0.3.1.tar.gz | sudo tar -xz -C /usr/local/src
-    - export PATH=$PATH:/usr/local/src/acbuild-v0.3.1/
 
   override:
     - docker info
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make build version=edge
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make build version=3.1
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make build version=3.2
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make build version=3.3
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make build version=3.4
+    - make build version=edge
+    - make build version=3.1
+    - make build version=3.2
+    - make build version=3.3
+    - make build version=3.4
 
 test:
   override:
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make run version=edge
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make run version=3.1
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make run version=3.2
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make run version=3.3
-    - PATH=$PATH:/usr/local/src/acbuild-v0.3.1/ make run version=3.4
+    - make run version=edge
+    - make run version=3.1
+    - make run version=3.2
+    - make run version=3.3
+    - make run version=3.4
 
 #deployment:
 #  hub:
