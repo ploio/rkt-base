@@ -12,6 +12,13 @@
 [Alpine Linux][] is a Linux distribution built around musl libc and BusyBox.
 This image is based on the official Alpine Linux image from CoreOS.
 
+# Supported tags
+
+- `3.4`
+- `3.3`
+- `3.2`
+- `3.1`
+- `edge`
 
 ## License
 
