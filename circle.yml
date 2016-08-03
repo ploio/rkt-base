@@ -1,0 +1,36 @@
+machine:
+  services:
+    - docker
+
+general:
+  branches:
+    ignore:
+      - gh-pages # list of branches to ignore
+
+dependencies:
+  pre:
+    - docker info
+    - docker version
+    - curl -L https://github.com/appc/acbuild/releases/download/v0.3.1/acbuild.tar.gz | sudo tar -xz -C /usr/local/bin/
+  override:
+    - docker info
+    - make build version=edge
+    - make build version=3.1
+    - make build version=3.2
+    - make build version=3.3
+    - make build version=3.4
+
+test:
+  override:
+    - make run version=edge
+    - make run version=3.1
+    - make run version=3.2
+    - make run version=3.3
+    - make run version=3.4
+
+#deployment:
+#  hub:
+#    branch: master
+#    commands:
+#      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+#      - docker push portefaix/elasticsearch
