@@ -24,9 +24,9 @@ ALPINE_VERSION=$1
 
 echo -e "Build Portefaix Rkt Base using Alpine ${ALPINE_VERSION}"
 
-$ACBUILD --debug begin
+$ACBUILD --debug begin ./alpine-${ALPINE_VERSION}-linux-amd64.aci
 
-$ACBUILD --debug set-name github.com/portefaix/rkt-base
+$ACBUILD --debug set-name github.com/portefaix/base
 $ACBUILD --debug annotation add authors "Nicolas Lamirault <nicolas.lamirault@gmail.com>"
 $ACBUILD --debug label add version $VERSION
 $ACBUILD --debug label add arch amd64
@@ -35,13 +35,15 @@ $ACBUILD --debug label add alpine_version $ALPINE_VERSION
 
 # based on alpine
 # $ACBUILD --debug dep add quay.io/coreos/alpine-sh
-$ACBUILD --debug dep add github.com/portefaix/rkt-base/alpine:3.4
+# $ACBUILD --debug dep add github.com/portefaix/alpine:${ALPINE_VERSION}
+# $ACBUILD --debug dep add https://github.com/portefaix/rkt-base/raw/master/alpine-${ALPINE_VERSION}-linux-amd64.aci
+# $ACBUILD dep add pkg.aster.is/aci/alpine:3.3
 
 $ACBUILD --debug run -- apk update
 $ACBUILD --debug run -- apk upgrade
 $ACBUILD --debug run -- apk add bash
 $ACBUILD --debug run -- rm -rf /var/cache/apk/*
 
-$ACBUILD --debug write --overwrite ./rkt-base-$VERSION-linux-amd64.aci
+$ACBUILD --debug write --overwrite ./base-$VERSION-linux-amd64.aci
 
 $ACBUILD --debug end

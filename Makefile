@@ -43,6 +43,15 @@ generate:
 	@sudo ./generate.sh 3.1
 	@sudo ./generate.sh edge
 
+.PHONY: fetch
+fetch:
+	@echo -e "$(OK_COLOR)[$(APP)] Fetch Alpine ACI $(NO_COLOR)"
+	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.4-linux-amd64.aci
+	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.3-linux-amd64.aci
+	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.2-linux-amd64.aci
+	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.1-linux-amd64.aci
+	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-edge-linux-amd64.aci
+
 .PHONY: build
 build:
 	@echo -e "$(OK_COLOR)[$(APP)] Build $(NAMESPACE)/$(IMAGE):$(VERSION)$(NO_COLOR)"
