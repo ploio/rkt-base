@@ -16,8 +16,6 @@
 
 set -e
 
-VERSION=0.2.0
-
 ACBUILD=${ACBUILD:-acbuild}
 
 ALPINE_VERSION=$1
@@ -28,7 +26,6 @@ $ACBUILD --debug begin ./${ALPINE_VERSION}/alpine-${ALPINE_VERSION}-linux-amd64.
 
 $ACBUILD --debug set-name github.com/portefaix/base
 $ACBUILD --debug annotation add authors "Nicolas Lamirault <nicolas.lamirault@gmail.com>"
-$ACBUILD --debug label add version ${VERSION}
 $ACBUILD --debug label add arch amd64
 $ACBUILD --debug label add os linux
 $ACBUILD --debug label add alpine_version ${ALPINE_VERSION}

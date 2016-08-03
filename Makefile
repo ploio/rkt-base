@@ -23,12 +23,13 @@ WARN_COLOR=\033[33;01m
 
 RKT=rkt
 
-VERSION := $(shell grep 'VERSION=' build.sh|awk -F"=" '{ print $$2 }')
+# APP_VERSION := $(shell grep 'VERSION=' build.sh|awk -F"=" '{ print $$2 }')
+APP_VERSION = 0.1.0
 
 all: help
 
 help:
-	@echo -e "$(OK_COLOR)==== $(APP) [$(VERSION)] ====$(NO_COLOR)"
+	@echo -e "$(OK_COLOR)==== $(APP) [$(APP_VERSION)] ====$(NO_COLOR)"
 	@echo -e "$(WARN_COLOR)- build version=xx   : Make the ACI image"
 	@echo -e "$(WARN_COLOR)- publish version=xx : Publish the image"
 	@echo -e "$(WARN_COLOR)- run version=xx     : Run a container"
@@ -36,39 +37,31 @@ help:
 
 .PHONY: generate
 generate:
-	@echo -e "$(OK_COLOR)[$(APP)] Generate Alpine ACI $(NO_COLOR)"
-	@sudo ./generate.sh 3.4
-	@sudo ./generate.sh 3.3
-	@sudo ./generate.sh 3.2
-	@sudo ./generate.sh 3.1
-	@sudo ./generate.sh edge
+	@echo -e "$(OK_COLOR)[$(APP)] Generate Alpine ACI ${version} $(NO_COLOR)"
+	@sudo ./generate.sh ${version}
 
-.PHONY: fetch
-fetch:
-	@echo -e "$(OK_COLOR)[$(APP)] Fetch Alpine ACI $(NO_COLOR)"
-	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.4-linux-amd64.aci
-	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.3-linux-amd64.aci
-	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.2-linux-amd64.aci
-	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.1-linux-amd64.aci
-	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-edge-linux-amd64.aci
+# .PHONY: fetch
+# fetch:
+# 	@echo -e "$(OK_COLOR)[$(APP)] Fetch Alpine ACI $(NO_COLOR)"
+# 	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.4-linux-amd64.aci
+# 	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.3-linux-amd64.aci
+# 	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.2-linux-amd64.aci
+# 	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-3.1-linux-amd64.aci
+# 	@sudo $(RKT) --insecure-options=image fetch https://github.com/portefaix/rkt-base/raw/master/alpine-edge-linux-amd64.aci
 
 .PHONY: build
 build:
-	@echo -e "$(OK_COLOR)[$(APP)] Build $(NAMESPACE)/$(IMAGE):$(VERSION)$(NO_COLOR)"
-	@sudo ./build.sh 3.4
-	@sudo ./build.sh 3.3
-	@sudo ./build.sh 3.2
-	@sudo ./build.sh 3.1
-	@sudo ./build.sh edge
+	@echo -e "$(OK_COLOR)[$(APP)] Build $(NAMESPACE)/$(IMAGE):${version}$(NO_COLOR)"
+	@sudo ./build.sh ${version}
 
 .PHONY: sign
 sign:
-	@echo -e "$(OK_COLOR)[$(APP)] Sign image $(NAMESPACE)/$(IMAGE):$(VERSION)$(NO_COLOR)"
+	@echo -e "$(OK_COLOR)[$(APP)] Sign image $(NAMESPACE)/$(IMAGE):${version}$(NO_COLOR)"
 	gpg --armor --yes \
-	     --output /base-$(VERSION).asc \
-	     --detach-sig ./base-$(VERSION).aci
+	     --output /base-${version}.asc \
+	     --detach-sig ./base-${version}.aci
 
 .PHONY: run
 run:
-	@echo -e "$(OK_COLOR)[$(APP)] run $(NAMESPACE)/$(IMAGE):$(VERSION)$(NO_COLOR)"
-	@$(RKT) --insecure-options=image run ./rkt-base-$(VERSION).aci --exec /bin/date
+	@echo -e "$(OK_COLOR)[$(APP)] run $(NAMESPACE)/$(IMAGE):${version}$(NO_COLOR)"
+	@sudo $(RKT) --insecure-options=image run ./${version}/base-${version}-linux-amd64.aci --exec /bin/date
