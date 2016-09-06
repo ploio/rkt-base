@@ -58,8 +58,8 @@ build:
 sign:
 	@echo -e "$(OK_COLOR)[$(APP)] Sign image $(NAMESPACE)/$(IMAGE):${version}$(NO_COLOR)"
 	gpg --armor --yes \
-	     --output /base-${version}.asc \
-	     --detach-sig ./base-${version}.aci
+	     --output ${version}/base-${version}-linux-amd64.asc \
+	     --detach-sig ./${version}/base-${version}-linux-amd64.aci
 
 .PHONY: run
 run:
